@@ -118,13 +118,13 @@ struct OpenPanelOptions {
   var allowsMultipleSelection: Bool
   var canChooseDirectories: Bool
   var canChooseFiles: Bool
-  var baseOptions: SavePanelOptions
+  var baseOptions: SavePanelOptions?
 
   static func fromList(_ list: [Any]) -> OpenPanelOptions? {
     let allowsMultipleSelection = list[0] as! Bool
     let canChooseDirectories = list[1] as! Bool
     let canChooseFiles = list[2] as! Bool
-    let baseOptions = SavePanelOptions.fromList(list[3] as! [Any])!
+    let baseOptions = SavePanelOptions.fromList(list[3] as! [Any])
 
     return OpenPanelOptions(
       allowsMultipleSelection: allowsMultipleSelection,
