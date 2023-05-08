@@ -41,14 +41,14 @@ private func nilOrValue<T>(_ value: Any?) -> T? {
 ///
 /// Generated class from Pigeon that represents data sent in messages.
 struct AllowedTypes {
-  var extensions: [String?]
-  var mimeTypes: [String?]
-  var utis: [String?]
+  var extensions: [String?]?
+  var mimeTypes: [String?]?
+  var utis: [String?]?
 
-  static func fromList(_ list: [Any]) -> AllowedTypes? {
-    let extensions = list[0] as! [String?]
-    let mimeTypes = list[1] as! [String?]
-    let utis = list[2] as! [String?]
+  static func fromList(_ list: [Any]?) -> AllowedTypes? {
+    let extensions = list?[0] as? [String?]
+    let mimeTypes = list?[1] as? [String?]
+    let utis = list?[2] as? [String?]
 
     return AllowedTypes(
       extensions: extensions,
@@ -80,10 +80,7 @@ struct SavePanelOptions {
   static func fromList(_ list: [Any]) -> SavePanelOptions? {
     var allowedFileTypes: AllowedTypes? = nil
 
-    guard let allowedFileTypesList = list[0] as? [Any]
-      else {
-        return nil
-    }
+    let allowedFileTypesList = list[0] as? [Any]
 
     allowedFileTypes = AllowedTypes.fromList(allowedFileTypesList)
 
@@ -118,13 +115,13 @@ struct OpenPanelOptions {
   var allowsMultipleSelection: Bool
   var canChooseDirectories: Bool
   var canChooseFiles: Bool
-  var baseOptions: SavePanelOptions?
+  var baseOptions: SavePanelOptions
 
   static func fromList(_ list: [Any]) -> OpenPanelOptions? {
     let allowsMultipleSelection = list[0] as! Bool
     let canChooseDirectories = list[1] as! Bool
     let canChooseFiles = list[2] as! Bool
-    let baseOptions = SavePanelOptions.fromList(list[3] as! [Any])
+    let baseOptions = SavePanelOptions.fromList(list[3] as! [Any])!
 
     return OpenPanelOptions(
       allowsMultipleSelection: allowsMultipleSelection,

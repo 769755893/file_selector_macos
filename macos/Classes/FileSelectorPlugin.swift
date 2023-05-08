@@ -84,23 +84,24 @@ public class FileSelectorPlugin: NSObject, FlutterPlugin, FileSelectorApi {
   /// - Parameters:
   ///   - panel: The panel to configure.
   ///   - arguments: The arguments dictionary from a FlutterMethodCall to this plugin.
-  private func configure(panel: NSSavePanel, with options: SavePanelOptions) {
-    if let directoryPath = options.directoryPath {
+  private func configure(panel: NSSavePanel, with options: SavePanelOptions?) {
+    if let directoryPath = options?.directoryPath {
       panel.directoryURL = URL(fileURLWithPath: directoryPath)
     }
-    if let suggestedName = options.nameFieldStringValue {
+    if let suggestedName = options?.nameFieldStringValue {
       panel.nameFieldStringValue = suggestedName
     }
-    if let prompt = options.prompt {
+    if let prompt = options?.prompt {
       panel.prompt = prompt
     }
 
-    if let acceptedTypes = options.allowedFileTypes {
+    if let acceptedTypes = options?.allowedFileTypes {
       var allowedTypes: [String] = []
       // The array values are non-null by convention even though Pigeon can't currently express
       // that via the types; see messages.dart.
-      allowedTypes.append(contentsOf: acceptedTypes.extensions.map({ $0! }))
-      allowedTypes.append(contentsOf: acceptedTypes.utis.map({ $0! }))
+
+//      allowedTypes.append(contentsOf: acceptedTypes?.extensions.map({ $0! }))
+//      allowedTypes.append(contentsOf: acceptedTypes?.utis.map({ $0! }))
       // TODO: Add support for mimeTypes in macOS 11+. See
       // https://github.com/flutter/flutter/issues/117843
 
@@ -119,7 +120,7 @@ public class FileSelectorPlugin: NSObject, FlutterPlugin, FileSelectorApi {
     openPanel panel: NSOpenPanel,
     with options: OpenPanelOptions
   ) {
-    configure(panel: panel, with: options.baseOptions)
+      configure(panel: panel, with: options.baseOptions)
     panel.allowsMultipleSelection = options.allowsMultipleSelection
     panel.canChooseDirectories = options.canChooseDirectories
     panel.canChooseFiles = options.canChooseFiles
